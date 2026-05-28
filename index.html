@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WealthOS — Tu Patrimonio, Completo.</title>
+  <meta name="description" content="WealthOS unifica todos tus activos en un solo panel inteligente. Acciones, bonos, cripto, bienes raíces y más. Diseñado para el inversionista mexicano." />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── BACKGROUND ───────────────────────────────────────────────── -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+    <div class="bg-orb bg-orb--4"></div>
+  </div>
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ───────────────────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">
+        <div class="nav__logo-mark">W</div>
+        <span class="nav__logo-name">WealthOS</span>
+      </a>
+      <nav class="nav__links">
+        <a href="#features" class="nav__link">Funciones</a>
+        <a href="#why" class="nav__link">¿Por qué?</a>
+        <a href="#assets" class="nav__link">Activos</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="https://wealthosystem.com/login" class="btn btn--ghost btn--sm">Iniciar Sesión</a>
+        <a href="https://wealthosystem.com/login" class="btn btn--primary btn--sm">Comenzar Gratis</a>
+      </div>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile" id="nav-mobile">
+      <a href="#features" class="nav__mobile-link">Funciones</a>
+      <a href="#why" class="nav__mobile-link">¿Por qué?</a>
+      <a href="#assets" class="nav__mobile-link">Activos</a>
+      <a href="https://wealthosystem.com/login" class="btn btn--primary btn--sm" style="margin-top: 8px; text-align: center;">Comenzar Gratis</a>
+    </div>
+  </header>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <canvas class="hero__canvas" id="hero-canvas"></canvas>
+    <div class="hero__content">
+      <div class="hero__badge reveal">
+        <span class="hero__badge-dot"></span>
+        Diseñado para inversionistas mexicanos
+      </div>
+      <h1 class="hero__title reveal">
+        Tu Patrimonio.<br />
+        <em>Completo. En Control.</em>
+      </h1>
+      <p class="hero__sub reveal">
+        WealthOS centraliza todos tus activos — acciones, bonos gubernamentales, cripto,
+        FIBRAs, inmuebles y más — en un solo panel inteligente. Con precios en tiempo real,
+        seguimiento de plusvalía y snapshots diarios.
+      </p>
+      <div class="hero__ctas reveal">
+        <a href="https://wealthosystem.com/login" class="btn btn--primary btn--lg">
+          Crear mi cuenta gratis
+        </a>
+        <a href="#features" class="btn btn--ghost btn--lg">
+          Ver funciones <span class="btn__arrow">↓</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mock Dashboard Preview -->
+    <div class="hero__mockup reveal-up">
+      <div class="mockup">
+        <div class="mockup__scan"></div>
+        <div class="mockup__sidebar">
+          <div class="mockup__logo-row">
+            <div class="mockup__logo-mark">W</div>
+            <span class="mockup__logo-text">WealthOS</span>
+          </div>
+          <div class="mockup__nav-items">
+            <div class="mockup__nav-item mockup__nav-item--active">◈ Dashboard</div>
+            <div class="mockup__nav-item">◇ Instrumentos</div>
+            <div class="mockup__nav-item">△ Cuentas</div>
+            <div class="mockup__nav-item">⊞ Transacciones</div>
+            <div class="mockup__nav-item">○ Historial</div>
+          </div>
+        </div>
+        <div class="mockup__main">
+          <div class="mockup__topbar">
+            <span class="mockup__page-title">Dashboard</span>
+            <div class="mockup__topbar-right">
+              <div class="mockup__btn-primary">+ Agregar Activo</div>
+            </div>
+          </div>
+          <div class="mockup__kpis">
+            <div class="mockup__kpi mockup__kpi--primary">
+              <span class="mockup__kpi-label">PATRIMONIO TOTAL</span>
+              <span class="mockup__kpi-value" id="mock-value">$1,500,000</span>
+              <span class="mockup__kpi-change mockup__kpi-change--up">▲ +12.4%</span>
+            </div>
+            <div class="mockup__kpi">
+              <span class="mockup__kpi-label">INVERTIDO</span>
+              <span class="mockup__kpi-value mockup__kpi-value--sm">$1,280,000</span>
+              <span class="mockup__kpi-sub">Instrumentos</span>
+            </div>
+            <div class="mockup__kpi">
+              <span class="mockup__kpi-label">LIQUIDEZ</span>
+              <span class="mockup__kpi-value mockup__kpi-value--sm">$220,000</span>
+              <span class="mockup__kpi-sub">Cuentas</span>
+            </div>
+            <div class="mockup__kpi">
+              <span class="mockup__kpi-label">P&amp;L SIN REALIZAR</span>
+              <span class="mockup__kpi-value mockup__kpi-value--sm mockup__kpi-value--up">+$138,100</span>
+              <span class="mockup__kpi-sub mockup__kpi-sub--up">+10.79%</span>
+            </div>
+          </div>
+          <div class="mockup__mid">
+            <div class="mockup__panel mockup__donut-panel">
+              <div class="mockup__panel-title">Allocation</div>
+              <svg class="mockup__donut" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#1e2640" stroke-width="12"/>
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#6366f1" stroke-width="12"
+                  stroke-dasharray="47 141" stroke-dashoffset="35" />
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#34d399" stroke-width="12"
+                  stroke-dasharray="28 141" stroke-dashoffset="-12" />
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#f59e0b" stroke-width="12"
+                  stroke-dasharray="22 141" stroke-dashoffset="-40" />
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#818cf8" stroke-width="12"
+                  stroke-dasharray="18 141" stroke-dashoffset="-62" />
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#f87171" stroke-width="12"
+                  stroke-dasharray="26 141" stroke-dashoffset="-80" />
+              </svg>
+              <div class="mockup__legend">
+                <div class="mockup__legend-row"><span class="mockup__dot" style="background:#6366f1"></span>Stocks</div>
+                <div class="mockup__legend-row"><span class="mockup__dot" style="background:#34d399"></span>Bonos</div>
+                <div class="mockup__legend-row"><span class="mockup__dot" style="background:#f59e0b"></span>Fondos</div>
+                <div class="mockup__legend-row"><span class="mockup__dot" style="background:#818cf8"></span>FIBRAs</div>
+                <div class="mockup__legend-row"><span class="mockup__dot" style="background:#f87171"></span>Cripto</div>
+              </div>
+            </div>
+            <div class="mockup__panel mockup__chart-panel">
+              <div class="mockup__panel-header">
+                <span class="mockup__panel-title">Net Worth Growth</span>
+                <div class="mockup__tabs">
+                  <span class="mockup__tab">1W</span>
+                  <span class="mockup__tab mockup__tab--active">1M</span>
+                  <span class="mockup__tab">3M</span>
+                  <span class="mockup__tab">YTD</span>
+                </div>
+              </div>
+              <svg class="mockup__chart" viewBox="0 0 260 80" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,60 C20,58 40,55 60,50 C80,45 90,48 110,42 C130,36 140,30 160,25 C180,20 200,22 220,15 C240,8 250,10 260,5"
+                  fill="none" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M0,60 C20,58 40,55 60,50 C80,45 90,48 110,42 C130,36 140,30 160,25 C180,20 200,22 220,15 C240,8 250,10 260,5 L260,80 L0,80 Z"
+                  fill="url(#chartGrad)"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mockup__table-panel">
+            <div class="mockup__panel-title">Holdings</div>
+            <div class="mockup__table">
+              <div class="mockup__table-header">
+                <span>INSTRUMENTO</span><span>VALOR</span><span>P&amp;L</span>
+              </div>
+              <div class="mockup__table-row">
+                <span><span class="mockup__dot" style="background:#6366f1"></span>Acciones</span>
+                <span>$450,000</span>
+                <span class="mockup__up">+8.2%</span>
+              </div>
+              <div class="mockup__table-row">
+                <span><span class="mockup__dot" style="background:#34d399"></span>Deuda Gubernamental</span>
+                <span>$320,000</span>
+                <span class="mockup__up">+11.1%</span>
+              </div>
+              <div class="mockup__table-row">
+                <span><span class="mockup__dot" style="background:#f59e0b"></span>Fibras</span>
+                <span>$185,000</span>
+                <span class="mockup__down">-2.1%</span>
+              </div>
+              <div class="mockup__table-row">
+                <span><span class="mockup__dot" style="background:#ec4899"></span>Bienes y Raíces</span>
+                <span>$290,000</span>
+                <span class="mockup__up">+5.4%</span>
+              </div>
+              <div class="mockup__table-row">
+                <span><span class="mockup__dot" style="background:#a78bfa"></span>Fondos para el Retiro</span>
+                <span>$255,000</span>
+                <span class="mockup__up">+6.9%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ─────────────────────────────────────────────────── -->
+  <div class="trust-bar">
+    <div class="trust-bar__inner">
+      <div class="trust-item reveal">
+        <span class="trust-item__num" data-target="7">0</span>
+        <span class="trust-item__label">Clases de activos</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item reveal">
+        <span class="trust-item__num" data-target="365">0</span>
+        <span class="trust-item__label">Snapshots al año</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item reveal">
+        <span class="trust-item__text">Precios en</span>
+        <span class="trust-item__label">Tiempo Real</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item reveal">
+        <span class="trust-item__text">Hecho para</span>
+        <span class="trust-item__label">México 🇲🇽</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ──────────────────────────────────────────────────── -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__tag">Plataforma</span>
+        <h2 class="section__title">Todo en un solo lugar</h2>
+        <p class="section__sub">
+          Deja de abrir múltiples aplicaciones. WealthOS consolida
+          toda tu riqueza — desde CETES hasta Bitcoin — en un panel unificado.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">◈</div>
+          <h3 class="feature-card__title">Dashboard Unificado</h3>
+          <p class="feature-card__desc">
+            Patrimonio total, P&amp;L sin realizar, liquidez disponible e instrumentos financieros
+            en cuatro métricas clave. Vista completa en un vistazo.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--green">↗</div>
+          <h3 class="feature-card__title">Precios en Tiempo Real</h3>
+          <p class="feature-card__desc">
+            Integración con Twelve Data para precios de acciones, ETFs y cripto.
+            Banxico BMX para tasas de bonos gubernamentales. Siempre actualizado.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--gold">○</div>
+          <h3 class="feature-card__title">Historial y Gráficas</h3>
+          <p class="feature-card__desc">
+            Snapshots diarios de tu patrimonio. Visualiza el crecimiento con rangos
+            de 1 semana, 1 mes, 3 meses, YTD o rango personalizado.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--purple">◇</div>
+          <h3 class="feature-card__title">Allocation Visual</h3>
+          <p class="feature-card__desc">
+            Gráfica de dona interactiva que muestra cómo está distribuido tu
+            portafolio entre todas las clases de activos en tiempo real.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon">△</div>
+          <h3 class="feature-card__title">Cuentas Bancarias</h3>
+          <p class="feature-card__desc">
+            Registra tus cuentas de banco, fondos de emergencia y efectivo.
+            Todo contabilizado en tu patrimonio total en MXN.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-card__icon feature-card__icon--red">⊞</div>
+          <h3 class="feature-card__title">Ledger de Transacciones</h3>
+          <p class="feature-card__desc">
+            Registro completo de compras, ventas, depósitos y retiros.
+            Historial detallado para cada movimiento de tu portafolio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ASSET CLASSES ─────────────────────────────────────────────── -->
+  <section class="section section--alt" id="assets">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__tag">Activos</span>
+        <h2 class="section__title">7 Clases de Activos</h2>
+        <p class="section__sub">
+          Desde acciones en NYSE hasta CETES, FIBRAs y bienes raíces.
+          WealthOS está construido para el ecosistema financiero mexicano.
+        </p>
+      </div>
+      <div class="assets-carousel-outer">
+        <div class="assets-carousel__track">
+
+          <!-- ═══════════════ SET A (original) ═══════════════ -->
+
+          <!-- SLIDE A1: Acciones y ETFs -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Acciones y ETFs</h3>
+            </div>
+            <p class="asset-card__desc">Tickers de cualquier bolsa — NYSE, NASDAQ, BMV. Precio promedio, acciones y P&amp;L calculado automáticamente.</p>
+            <div class="asset-card__tags">
+              <span class="tag">AAPL</span><span class="tag">AMZN</span><span class="tag">VOO</span><span class="tag">NAFTRAC</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Portfolio</span><span class="slide__kpi-value">$450,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +18.4%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$380,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Ganancia</span><span class="slide__kpi-value">+$70,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +18.4%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Valor del portafolio</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,52 30,44 60,36 90,26 120,18 150,12 190,6 190,60 0,60" fill="#6366f1" fill-opacity="0.18"/>
+                  <polyline points="0,52 30,44 60,36 90,26 120,18 150,12 190,6" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Ticker</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#6366f1"></span>AAPL</span><span class="slide__row-value">$185,400</span><span class="slide__row-change slide__row-change--up">+23.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#8b5cf6"></span>AMZN</span><span class="slide__row-value">$142,200</span><span class="slide__row-change slide__row-change--up">+11.8%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#a78bfa"></span>NAFTRAC</span><span class="slide__row-value">$122,400</span><span class="slide__row-change slide__row-change--down">-2.3%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A2: Bonos Gubernamentales -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#10b981,#34d399)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Bonos Gubernamentales</h3>
+            </div>
+            <p class="asset-card__desc">CETES, BONDIA, BONOS y UDIBONOS con tasas en tiempo real desde Banxico. Seguimiento de vencimientos y rendimientos.</p>
+            <div class="asset-card__tags">
+              <span class="tag">CETES</span><span class="tag">BONDIA</span><span class="tag">UDIBONOS</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor Total</span><span class="slide__kpi-value">$320,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +11.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Tasa Prom.</span><span class="slide__kpi-value">11.10%</span><span class="slide__kpi-change slide__kpi-change--neutral">anual</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Rendimiento</span><span class="slide__kpi-value">+$35,520</span><span class="slide__kpi-change slide__kpi-change--up">acumulado</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Crecimiento acumulado</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,50 40,44 80,38 120,30 160,22 190,16 190,60 0,60" fill="#10b981" fill-opacity="0.18"/>
+                  <polyline points="0,50 40,44 80,38 120,30 160,22 190,16" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Instrumento</span><span>Valor</span><span>Tasa</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#10b981"></span>CETES 28d</span><span class="slide__row-value">$150,000</span><span class="slide__row-change slide__row-change--up">11.15%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#34d399"></span>BONDIA</span><span class="slide__row-value">$100,000</span><span class="slide__row-change slide__row-change--up">11.02%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#6ee7b7"></span>UDIBONOS</span><span class="slide__row-value">$70,000</span><span class="slide__row-change slide__row-change--up">4.80%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A3: Fondos de Inversión -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Fondos de Inversión</h3>
+            </div>
+            <p class="asset-card__desc">Fondos de Renta Variable, Renta Fija, Patrimoniales e Internacionales. NAV diario y seguimiento de unidades por operadora.</p>
+            <div class="asset-card__tags">
+              <span class="tag">GBM+</span><span class="tag">BlackRock</span><span class="tag">Fidelity</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">NAV Total</span><span class="slide__kpi-value">$185,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +10.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$168,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Rendimiento</span><span class="slide__kpi-value">+$17,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +10.1%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">NAV histórico</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,50 40,45 80,38 120,32 160,26 190,20 190,60 0,60" fill="#f59e0b" fill-opacity="0.18"/>
+                  <polyline points="0,50 40,45 80,38 120,32 160,26 190,20" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Fondo</span><span>Valor</span><span>Ret.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f59e0b"></span>GBM+ Crec.</span><span class="slide__row-value">$85,000</span><span class="slide__row-change slide__row-change--up">+12.3%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fbbf24"></span>BlackRock RF</span><span class="slide__row-value">$60,000</span><span class="slide__row-change slide__row-change--up">+8.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fde68a"></span>Fidelity Mix</span><span class="slide__row-value">$40,000</span><span class="slide__row-change slide__row-change--up">+9.5%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A4: FIBRAs -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">FIBRAs</h3>
+            </div>
+            <p class="asset-card__desc">Fideicomitentes de Bienes Raíces en México (REITs). Sigue CBFIs, distribuciones y rendimientos de FUNO, DANHOS y más.</p>
+            <div class="asset-card__tags">
+              <span class="tag">FUNO11</span><span class="tag">DANHOS13</span><span class="tag">TERRA13</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor CBFIs</span><span class="slide__kpi-value">$190,000</span><span class="slide__kpi-change slide__kpi-change--down">▼ -2.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Dist. Mensual</span><span class="slide__kpi-value">$1,900</span><span class="slide__kpi-change slide__kpi-change--neutral">MXN/mes</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Yield Dist.</span><span class="slide__kpi-value">12.0%</span><span class="slide__kpi-change slide__kpi-change--up">anual</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Precio CBFI</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,28 30,32 60,40 90,34 120,42 150,36 190,40 190,60 0,60" fill="#ec4899" fill-opacity="0.18"/>
+                  <polyline points="0,28 30,32 60,40 90,34 120,42 150,36 190,40" fill="none" stroke="#ec4899" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>FIBRA</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#ec4899"></span>FUNO11</span><span class="slide__row-value">$95,000</span><span class="slide__row-change slide__row-change--down">-3.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f43f5e"></span>DANHOS13</span><span class="slide__row-value">$60,000</span><span class="slide__row-change slide__row-change--down">-1.8%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fb7185"></span>TERRA13</span><span class="slide__row-value">$35,000</span><span class="slide__row-change slide__row-change--up">+2.1%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A5: Fondos para el Retiro -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Fondos para el Retiro</h3>
+            </div>
+            <p class="asset-card__desc">PPR, Afore, Plan Empresarial y Pensión IMSS. Saldo actual, aportaciones patronales y proyección de retiro en un solo lugar.</p>
+            <div class="asset-card__tags">
+              <span class="tag">PPR</span><span class="tag">Afore</span><span class="tag">IMSS</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Saldo Total</span><span class="slide__kpi-value">$255,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +6.9%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Aportado</span><span class="slide__kpi-value">$200,000</span><span class="slide__kpi-change slide__kpi-change--neutral">total</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Proyección</span><span class="slide__kpi-value">$3.2M</span><span class="slide__kpi-change slide__kpi-change--up">al retiro</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Saldo histórico</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,52 40,44 80,36 120,28 160,20 190,14 190,60 0,60" fill="#0ea5e9" fill-opacity="0.18"/>
+                  <polyline points="0,52 40,44 80,36 120,28 160,20 190,14" fill="none" stroke="#0ea5e9" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Fondo</span><span>Saldo</span><span>Ret.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#0ea5e9"></span>PPR Allianz</span><span class="slide__row-value">$140,000</span><span class="slide__row-change slide__row-change--up">+8.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#38bdf8"></span>Afore Citi</span><span class="slide__row-value">$80,000</span><span class="slide__row-change slide__row-change--up">+5.4%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#7dd3fc"></span>IMSS</span><span class="slide__row-value">$35,000</span><span class="slide__row-change slide__row-change--up">+4.1%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A6: Criptomonedas -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#f97316,#fb923c)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="9"/><path d="M9 9.5C9 8.1 10.3 7 12 7s3 1.1 3 2.5c0 2.5-3 3-3 5"/><line x1="12" y1="17" x2="12" y2="17.5"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Criptomonedas</h3>
+            </div>
+            <p class="asset-card__desc">Bitcoin, Ethereum y cualquier cripto. Precios en USD con conversión automática a MXN. Costo promedio y valor de mercado.</p>
+            <div class="asset-card__tags">
+              <span class="tag">BTC</span><span class="tag">ETH</span><span class="tag">SOL</span><span class="tag">USDT</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor Cripto</span><span class="slide__kpi-value">$98,500</span><span class="slide__kpi-change slide__kpi-change--up">▲ +15.9%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$85,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Ganancia</span><span class="slide__kpi-value">+$13,500</span><span class="slide__kpi-change slide__kpi-change--up">▲ +15.9%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Valor en MXN</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,48 20,28 40,42 60,20 80,36 100,14 120,30 150,10 170,24 190,18 190,60 0,60" fill="#f97316" fill-opacity="0.18"/>
+                  <polyline points="0,48 20,28 40,42 60,20 80,36 100,14 120,30 150,10 170,24 190,18" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Cripto</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f97316"></span>Bitcoin</span><span class="slide__row-value">$62,000</span><span class="slide__row-change slide__row-change--up">+18.4%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fb923c"></span>Ethereum</span><span class="slide__row-value">$24,500</span><span class="slide__row-change slide__row-change--up">+11.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fdba74"></span>Solana</span><span class="slide__row-value">$12,000</span><span class="slide__row-change slide__row-change--up">+22.8%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE A7: Bienes y Raíces -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Bienes y Raíces</h3>
+            </div>
+            <p class="asset-card__desc">Propiedades físicas con hipoteca, renta mensual y plusvalía. Costos notariales, ISABI y escrituración incluidos.</p>
+            <div class="asset-card__tags">
+              <span class="tag">Casa</span><span class="tag">Depto</span><span class="tag">Terreno</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor</span><span class="slide__kpi-value">$290,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +5.4%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Hipoteca</span><span class="slide__kpi-value">$220,000</span><span class="slide__kpi-change slide__kpi-change--neutral">saldo</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Equity</span><span class="slide__kpi-value">$70,000</span><span class="slide__kpi-change slide__kpi-change--up">plusvalía</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Plusvalía histórica</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,54 40,50 80,46 120,40 160,34 190,28 190,60 0,60" fill="#8b5cf6" fill-opacity="0.18"/>
+                  <polyline points="0,54 40,50 80,46 120,40 160,34 190,28" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Propiedad</span><span>Valor</span><span>Rend.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#8b5cf6"></span>Depto Roma</span><span class="slide__row-value">$145,000</span><span class="slide__row-change slide__row-change--up">+6.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#a78bfa"></span>Terreno Qro</span><span class="slide__row-value">$95,000</span><span class="slide__row-change slide__row-change--up">+4.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#c4b5fd"></span>Casa Satélite</span><span class="slide__row-value">$50,000</span><span class="slide__row-change slide__row-change--up">+5.8%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ SET B (duplicate for infinite loop) ═══════════════ -->
+
+          <!-- SLIDE B1: Acciones y ETFs -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Acciones y ETFs</h3>
+            </div>
+            <p class="asset-card__desc">Tickers de cualquier bolsa — NYSE, NASDAQ, BMV. Precio promedio, acciones y P&amp;L calculado automáticamente.</p>
+            <div class="asset-card__tags">
+              <span class="tag">AAPL</span><span class="tag">AMZN</span><span class="tag">VOO</span><span class="tag">NAFTRAC</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Portfolio</span><span class="slide__kpi-value">$450,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +18.4%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$380,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Ganancia</span><span class="slide__kpi-value">+$70,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +18.4%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Valor del portafolio</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,52 30,44 60,36 90,26 120,18 150,12 190,6 190,60 0,60" fill="#6366f1" fill-opacity="0.18"/>
+                  <polyline points="0,52 30,44 60,36 90,26 120,18 150,12 190,6" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Ticker</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#6366f1"></span>AAPL</span><span class="slide__row-value">$185,400</span><span class="slide__row-change slide__row-change--up">+23.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#8b5cf6"></span>AMZN</span><span class="slide__row-value">$142,200</span><span class="slide__row-change slide__row-change--up">+11.8%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#a78bfa"></span>NAFTRAC</span><span class="slide__row-value">$122,400</span><span class="slide__row-change slide__row-change--down">-2.3%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B2: Bonos Gubernamentales -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#10b981,#34d399)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Bonos Gubernamentales</h3>
+            </div>
+            <p class="asset-card__desc">CETES, BONDIA, BONOS y UDIBONOS con tasas en tiempo real desde Banxico. Seguimiento de vencimientos y rendimientos.</p>
+            <div class="asset-card__tags">
+              <span class="tag">CETES</span><span class="tag">BONDIA</span><span class="tag">UDIBONOS</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor Total</span><span class="slide__kpi-value">$320,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +11.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Tasa Prom.</span><span class="slide__kpi-value">11.10%</span><span class="slide__kpi-change slide__kpi-change--neutral">anual</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Rendimiento</span><span class="slide__kpi-value">+$35,520</span><span class="slide__kpi-change slide__kpi-change--up">acumulado</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Crecimiento acumulado</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,50 40,44 80,38 120,30 160,22 190,16 190,60 0,60" fill="#10b981" fill-opacity="0.18"/>
+                  <polyline points="0,50 40,44 80,38 120,30 160,22 190,16" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Instrumento</span><span>Valor</span><span>Tasa</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#10b981"></span>CETES 28d</span><span class="slide__row-value">$150,000</span><span class="slide__row-change slide__row-change--up">11.15%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#34d399"></span>BONDIA</span><span class="slide__row-value">$100,000</span><span class="slide__row-change slide__row-change--up">11.02%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#6ee7b7"></span>UDIBONOS</span><span class="slide__row-value">$70,000</span><span class="slide__row-change slide__row-change--up">4.80%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B3: Fondos de Inversión -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Fondos de Inversión</h3>
+            </div>
+            <p class="asset-card__desc">Fondos de Renta Variable, Renta Fija, Patrimoniales e Internacionales. NAV diario y seguimiento de unidades por operadora.</p>
+            <div class="asset-card__tags">
+              <span class="tag">GBM+</span><span class="tag">BlackRock</span><span class="tag">Fidelity</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">NAV Total</span><span class="slide__kpi-value">$185,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +10.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$168,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Rendimiento</span><span class="slide__kpi-value">+$17,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +10.1%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">NAV histórico</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,50 40,45 80,38 120,32 160,26 190,20 190,60 0,60" fill="#f59e0b" fill-opacity="0.18"/>
+                  <polyline points="0,50 40,45 80,38 120,32 160,26 190,20" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Fondo</span><span>Valor</span><span>Ret.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f59e0b"></span>GBM+ Crec.</span><span class="slide__row-value">$85,000</span><span class="slide__row-change slide__row-change--up">+12.3%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fbbf24"></span>BlackRock RF</span><span class="slide__row-value">$60,000</span><span class="slide__row-change slide__row-change--up">+8.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fde68a"></span>Fidelity Mix</span><span class="slide__row-value">$40,000</span><span class="slide__row-change slide__row-change--up">+9.5%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B4: FIBRAs -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">FIBRAs</h3>
+            </div>
+            <p class="asset-card__desc">Fideicomitentes de Bienes Raíces en México (REITs). Sigue CBFIs, distribuciones y rendimientos de FUNO, DANHOS y más.</p>
+            <div class="asset-card__tags">
+              <span class="tag">FUNO11</span><span class="tag">DANHOS13</span><span class="tag">TERRA13</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor CBFIs</span><span class="slide__kpi-value">$190,000</span><span class="slide__kpi-change slide__kpi-change--down">▼ -2.1%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Dist. Mensual</span><span class="slide__kpi-value">$1,900</span><span class="slide__kpi-change slide__kpi-change--neutral">MXN/mes</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Yield Dist.</span><span class="slide__kpi-value">12.0%</span><span class="slide__kpi-change slide__kpi-change--up">anual</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Precio CBFI</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,28 30,32 60,40 90,34 120,42 150,36 190,40 190,60 0,60" fill="#ec4899" fill-opacity="0.18"/>
+                  <polyline points="0,28 30,32 60,40 90,34 120,42 150,36 190,40" fill="none" stroke="#ec4899" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>FIBRA</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#ec4899"></span>FUNO11</span><span class="slide__row-value">$95,000</span><span class="slide__row-change slide__row-change--down">-3.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f43f5e"></span>DANHOS13</span><span class="slide__row-value">$60,000</span><span class="slide__row-change slide__row-change--down">-1.8%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fb7185"></span>TERRA13</span><span class="slide__row-value">$35,000</span><span class="slide__row-change slide__row-change--up">+2.1%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B5: Fondos para el Retiro -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Fondos para el Retiro</h3>
+            </div>
+            <p class="asset-card__desc">PPR, Afore, Plan Empresarial y Pensión IMSS. Saldo actual, aportaciones patronales y proyección de retiro en un solo lugar.</p>
+            <div class="asset-card__tags">
+              <span class="tag">PPR</span><span class="tag">Afore</span><span class="tag">IMSS</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Saldo Total</span><span class="slide__kpi-value">$255,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +6.9%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Aportado</span><span class="slide__kpi-value">$200,000</span><span class="slide__kpi-change slide__kpi-change--neutral">total</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Proyección</span><span class="slide__kpi-value">$3.2M</span><span class="slide__kpi-change slide__kpi-change--up">al retiro</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Saldo histórico</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,52 40,44 80,36 120,28 160,20 190,14 190,60 0,60" fill="#0ea5e9" fill-opacity="0.18"/>
+                  <polyline points="0,52 40,44 80,36 120,28 160,20 190,14" fill="none" stroke="#0ea5e9" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Fondo</span><span>Saldo</span><span>Ret.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#0ea5e9"></span>PPR Allianz</span><span class="slide__row-value">$140,000</span><span class="slide__row-change slide__row-change--up">+8.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#38bdf8"></span>Afore Citi</span><span class="slide__row-value">$80,000</span><span class="slide__row-change slide__row-change--up">+5.4%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#7dd3fc"></span>IMSS</span><span class="slide__row-value">$35,000</span><span class="slide__row-change slide__row-change--up">+4.1%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B6: Criptomonedas -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#f97316,#fb923c)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="9"/><path d="M9 9.5C9 8.1 10.3 7 12 7s3 1.1 3 2.5c0 2.5-3 3-3 5"/><line x1="12" y1="17" x2="12" y2="17.5"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Criptomonedas</h3>
+            </div>
+            <p class="asset-card__desc">Bitcoin, Ethereum y cualquier cripto. Precios en USD con conversión automática a MXN. Costo promedio y valor de mercado.</p>
+            <div class="asset-card__tags">
+              <span class="tag">BTC</span><span class="tag">ETH</span><span class="tag">SOL</span><span class="tag">USDT</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor Cripto</span><span class="slide__kpi-value">$98,500</span><span class="slide__kpi-change slide__kpi-change--up">▲ +15.9%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Invertido</span><span class="slide__kpi-value">$85,000</span><span class="slide__kpi-change slide__kpi-change--neutral">cost basis</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Ganancia</span><span class="slide__kpi-value">+$13,500</span><span class="slide__kpi-change slide__kpi-change--up">▲ +15.9%</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Valor en MXN</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,48 20,28 40,42 60,20 80,36 100,14 120,30 150,10 170,24 190,18 190,60 0,60" fill="#f97316" fill-opacity="0.18"/>
+                  <polyline points="0,48 20,28 40,42 60,20 80,36 100,14 120,30 150,10 170,24 190,18" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Cripto</span><span>Valor</span><span>P&amp;L</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#f97316"></span>Bitcoin</span><span class="slide__row-value">$62,000</span><span class="slide__row-change slide__row-change--up">+18.4%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fb923c"></span>Ethereum</span><span class="slide__row-value">$24,500</span><span class="slide__row-change slide__row-change--up">+11.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#fdba74"></span>Solana</span><span class="slide__row-value">$12,000</span><span class="slide__row-change slide__row-change--up">+22.8%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE B7: Bienes y Raíces -->
+          <div class="carousel-slide">
+            <div class="slide__info-header">
+              <div class="asset-card__icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <h3 class="asset-card__title">Bienes y Raíces</h3>
+            </div>
+            <p class="asset-card__desc">Propiedades físicas con hipoteca, renta mensual y plusvalía. Costos notariales, ISABI y escrituración incluidos.</p>
+            <div class="asset-card__tags">
+              <span class="tag">Casa</span><span class="tag">Depto</span><span class="tag">Terreno</span>
+            </div>
+            <div class="slide__dashboard">
+              <span class="slide__dashboard-title">Vista previa del módulo</span>
+              <div class="slide__kpis">
+                <div class="slide__kpi"><span class="slide__kpi-label">Valor</span><span class="slide__kpi-value">$290,000</span><span class="slide__kpi-change slide__kpi-change--up">▲ +5.4%</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Hipoteca</span><span class="slide__kpi-value">$220,000</span><span class="slide__kpi-change slide__kpi-change--neutral">saldo</span></div>
+                <div class="slide__kpi"><span class="slide__kpi-label">Equity</span><span class="slide__kpi-value">$70,000</span><span class="slide__kpi-change slide__kpi-change--up">plusvalía</span></div>
+              </div>
+              <div class="slide__chart">
+                <span class="slide__chart-label">Plusvalía histórica</span>
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                  <polygon points="0,54 40,50 80,46 120,40 160,34 190,28 190,60 0,60" fill="#8b5cf6" fill-opacity="0.18"/>
+                  <polyline points="0,54 40,50 80,46 120,40 160,34 190,28" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="slide__table">
+                <div class="slide__table-head"><span>Propiedad</span><span>Valor</span><span>Rend.</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#8b5cf6"></span>Depto Roma</span><span class="slide__row-value">$145,000</span><span class="slide__row-change slide__row-change--up">+6.2%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#a78bfa"></span>Terreno Qro</span><span class="slide__row-value">$95,000</span><span class="slide__row-change slide__row-change--up">+4.1%</span></div>
+                <div class="slide__row"><span class="slide__row-name"><span class="slide__row-dot" style="background:#c4b5fd"></span>Casa Satélite</span><span class="slide__row-value">$50,000</span><span class="slide__row-change slide__row-change--up">+5.8%</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="carousel-fade carousel-fade--left"></div>
+        <div class="carousel-fade carousel-fade--right"></div>
+      </div>
+
+      <div class="assets-cta-wrap">
+        <div class="asset-card asset-card--cta reveal">
+          <p class="asset-card__cta-text">Todo tu patrimonio en un solo panel. Sin hojas de cálculo, sin múltiples apps.</p>
+          <a href="https://wealthosystem.com/login" class="btn btn--primary btn--lg" style="margin-top: 16px;">
+            Crear mi cuenta gratis →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY WEALTHOS ──────────────────────────────────────────────── -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__tag">¿Por qué WealthOS?</span>
+        <h2 class="section__title">Construido para México</h2>
+        <p class="section__sub">
+          Las herramientas de finanzas personales genéricas ignoran el ecosistema
+          financiero mexicano. WealthOS no.
+        </p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-card__num">01</div>
+          <h3 class="why-card__title">Instrumentos Mexicanos de Primera Clase</h3>
+          <p class="why-card__desc">
+            CETES, BONDIA, BONOS, UDIBONOS, FIBRAs y Afore son ciudadanos de primera
+            clase en WealthOS — no parches de último minuto. Con series, plazos,
+            tasas y vencimientos.
+          </p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-card__num">02</div>
+          <h3 class="why-card__title">Todo en MXN</h3>
+          <p class="why-card__desc">
+            Tu patrimonio siempre en pesos mexicanos. El tipo de cambio USD/MXN se
+            actualiza automáticamente cada noche — tus acciones y cripto siempre
+            reflejan su valor real en tu moneda.
+          </p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-card__num">03</div>
+          <h3 class="why-card__title">Datos, No Estimaciones</h3>
+          <p class="why-card__desc">
+            Precios en tiempo real de Twelve Data. Tasas de Banxico vía BMX API.
+            Snapshots diarios para no perder ningún punto de tu historial. Sin datos
+            inventados ni aproximaciones.
+          </p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-card__num">04</div>
+          <h3 class="why-card__title">Simple por Diseño</h3>
+          <p class="why-card__desc">
+            No necesitas ser contador ni programador. Agrega un activo en segundos,
+            ve tu P&amp;L al instante y entiende tu portafolio con gráficas claras
+            y datos precisos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER ────────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="container cta-section__inner reveal">
+      <div class="cta-section__tag">Empieza hoy</div>
+      <h2 class="cta-section__title">
+        Tu siguiente mejor decisión financiera<br />
+        <em>empieza con claridad.</em>
+      </h2>
+      <p class="cta-section__sub">
+        Crea tu cuenta en minutos. Sin costo. Sin tarjeta de crédito.
+      </p>
+      <a href="https://wealthosystem.com/login" class="btn btn--primary btn--xl">
+        Comenzar Gratis
+      </a>
+      <p class="cta-section__note">
+        ¿Ya tienes cuenta?
+        <a href="https://wealthosystem.com/login" class="cta-section__link">Inicia sesión aquí</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <div class="nav__logo-mark" style="width:28px;height:28px;font-size:14px">W</div>
+          <span class="nav__logo-name" style="font-size:18px">WealthOS</span>
+        </div>
+        <p class="footer__tagline">Tu portafolio personal, organizado.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://wealthosystem.com/login" class="footer__link">Iniciar Sesión</a>
+        <a href="https://wealthosystem.com/login" class="footer__link">Crear Cuenta</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>WealthOS &copy; 2026 — Diseñado para inversionistas mexicanos</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
