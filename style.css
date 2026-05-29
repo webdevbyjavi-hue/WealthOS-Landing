@@ -1519,14 +1519,30 @@ body::before {
 .footer__link:hover { color: var(--accent-light); }
 
 .footer__bottom {
+  padding: 1.25rem var(--space-md);
+}
+
+.footer__bottom-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-tertiary);
-  text-align: center;
   letter-spacing: 0.3px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-subtle);
 }
+
+.footer__ws-link {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 55%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.footer__ws-link:hover { color: var(--accent-light); }
 
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE
