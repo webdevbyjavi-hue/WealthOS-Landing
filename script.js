@@ -2,9 +2,18 @@
 
 /* ─── Navbar scroll effect ──────────────────────────────────── */
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
+const navProgressBar = document.getElementById('nav-progress-bar');
+
+function updateNavOnScroll() {
   nav.classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  navProgressBar.style.width = progress + '%';
+}
+
+window.addEventListener('scroll', updateNavOnScroll, { passive: true });
+updateNavOnScroll();
 
 /* ─── Mobile hamburger ──────────────────────────────────────── */
 const hamburger = document.getElementById('nav-hamburger');
@@ -23,17 +32,66 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 });
 
 /* ─── Scroll reveal ─────────────────────────────────────────── */
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.setProperty('--i', i);
+});
+
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+      entry.target.classList.add('visible', 'is-visible');
+      revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
 document.querySelectorAll('.reveal, .reveal-up').forEach(el => {
   revealObserver.observe(el);
 });
+
+/* ─── Asset module reveal (slide-in + chart draw, ladder effect) ─ */
+(function initAssetModules() {
+  const cards = document.querySelectorAll('.assets-stack .carousel-slide');
+  if (!cards.length) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const chartLengths = new Map();
+
+  cards.forEach(card => {
+    const polyline = card.querySelector('.slide__chart polyline');
+    if (!polyline) return;
+    const length = polyline.getTotalLength();
+    chartLengths.set(polyline, length);
+    polyline.style.strokeDasharray = length;
+    polyline.style.strokeDashoffset = prefersReducedMotion ? 0 : length;
+  });
+
+  if (prefersReducedMotion) {
+    cards.forEach(card => card.classList.add('is-visible'));
+    return;
+  }
+
+  const assetObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const card = entry.target;
+      const polyline = card.querySelector('.slide__chart polyline');
+
+      if (entry.isIntersecting) {
+        card.classList.add('is-visible');
+        if (polyline) {
+          requestAnimationFrame(() => { polyline.style.strokeDashoffset = '0'; });
+        }
+      } else {
+        card.classList.remove('is-visible');
+        if (polyline) {
+          polyline.style.strokeDashoffset = chartLengths.get(polyline);
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+
+  cards.forEach(card => assetObserver.observe(card));
+})();
 
 /* ─── Animated number counters ──────────────────────────────── */
 function animateCounter(el, target, duration = 1200) {
@@ -201,6 +259,183 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     window.scrollTo({ top, behavior: 'smooth' });
   });
 });
+
+/* ─── Ticker Tunnel (scroll-pinned) ─────────────────────────── */
+/**
+ * Ticker shape: { symbol, category, price, changePct, direction }
+ * - price:      pre-formatted display string (MXN price, FX rate or yield %)
+ * - changePct:  unsigned percent change as a number
+ * - direction:  'up' | 'down'
+ *
+ * Seed data for the tunnel columns. Swap this array for live values
+ * from the Twelve Data + Banxico backend once it's wired up.
+ */
+const TUNNEL_TICKERS = [
+  { symbol: 'FUNO11',    category: 'FIBRA',  price: '$38.42',     changePct: 1.24, direction: 'up' },
+  { symbol: 'FIBRAMQ',   category: 'FIBRA',  price: '$29.18',     changePct: 0.76, direction: 'up' },
+  { symbol: 'NAFTRAC',   category: 'ETF',    price: '$138.55',    changePct: 0.34, direction: 'down' },
+  { symbol: 'AMXL',      category: 'ACCIÓN', price: '$17.85',     changePct: 0.62, direction: 'down' },
+  { symbol: 'GFNORTE',   category: 'ACCIÓN', price: '$159.30',    changePct: 0.88, direction: 'up' },
+  { symbol: 'WALMEX',    category: 'ACCIÓN', price: '$68.91',     changePct: 0.41, direction: 'up' },
+  { symbol: 'CEMEXCPO',  category: 'ACCIÓN', price: '$14.62',     changePct: 1.02, direction: 'up' },
+  { symbol: 'GMEXICOB',  category: 'ACCIÓN', price: '$82.17',     changePct: 0.29, direction: 'down' },
+  { symbol: 'KIMBERA',   category: 'ACCIÓN', price: '$26.04',     changePct: 0.55, direction: 'up' },
+  { symbol: 'CETES 28D', category: 'BONO',   price: '10.42%',     changePct: 0.03, direction: 'down' },
+  { symbol: 'UDIBONO',   category: 'BONO',   price: '4.12%',      changePct: 0.05, direction: 'up' },
+  { symbol: 'BONOS 10A', category: 'BONO',   price: '9.87%',      changePct: 0.02, direction: 'up' },
+  { symbol: 'BTC',       category: 'CRIPTO', price: '$1,824,650', changePct: 2.15, direction: 'up' },
+  { symbol: 'ETH',       category: 'CRIPTO', price: '$62,480',    changePct: 1.48, direction: 'down' },
+  { symbol: 'AFORE PPR', category: 'FONDO',  price: '$7.94',      changePct: 0.33, direction: 'up' },
+  { symbol: 'USD/MXN',   category: 'FX',     price: '$18.27',     changePct: 0.18, direction: 'down' },
+];
+
+function formatTunnelPrice(ticker) {
+  return ticker.price;
+}
+
+function formatTunnelChange(ticker) {
+  const arrow = ticker.direction === 'up' ? '▲' : '▼';
+  return `${arrow} ${ticker.changePct.toFixed(2)}%`;
+}
+
+function renderTunnelCard(ticker) {
+  return `
+    <div class="tunnel-card">
+      <div class="tunnel-card__top">
+        <span class="tunnel-card__symbol">${ticker.symbol}</span>
+      </div>
+      <div class="tunnel-card__bottom">
+        <span class="tunnel-card__price">${formatTunnelPrice(ticker)}</span>
+        <span class="tunnel-card__change tunnel-card__change--${ticker.direction}">${formatTunnelChange(ticker)}</span>
+      </div>
+    </div>`;
+}
+
+/* Round-robin the ticker list across `count` columns */
+function splitIntoColumns(tickers, count) {
+  const columns = Array.from({ length: count }, () => []);
+  tickers.forEach((ticker, i) => columns[i % count].push(ticker));
+  return columns;
+}
+
+/* Fill a column with at least one full set, then repeat until it
+   exceeds minHeight so the parallax travel never runs out of cards. */
+function fillTunnelColumn(el, tickers, minHeight) {
+  const set = tickers.map(renderTunnelCard).join('');
+  el.innerHTML = set;
+  let guard = 0;
+  while (el.scrollHeight < minHeight && guard < 300) {
+    el.insertAdjacentHTML('beforeend', set);
+    guard++;
+  }
+}
+
+/* Re-roll a card's % change to a fresh random up/down value */
+function refreshTunnelChanges(columns) {
+  columns.forEach(col => {
+    col.querySelectorAll('.tunnel-card__change').forEach(el => {
+      const direction = Math.random() > 0.5 ? 'up' : 'down';
+      const changePct = Math.random() * 2.5;
+      el.textContent = formatTunnelChange({ direction, changePct });
+      el.classList.remove('tunnel-card__change--up', 'tunnel-card__change--down');
+      el.classList.add(`tunnel-card__change--${direction}`);
+    });
+  });
+}
+
+(function initTickerTunnel() {
+  const section = document.querySelector('.ticker-tunnel');
+  if (!section) return;
+
+  const columnEls = Array.from(section.querySelectorAll('.ticker-tunnel__column'));
+
+  /* Pin distance, expressed in viewport-heights — tune the "tunnel" length here */
+  const PIN_DISTANCE_VH = 1.3;
+  const PIN_DISTANCE_VH_MOBILE = 1.0;
+  const COLUMN_SPEEDS = [1.0, 1.35, 0.8, 1.5, 1.1];
+
+  if (!window.gsap || !window.ScrollTrigger) {
+    const groups = splitIntoColumns(TUNNEL_TICKERS, columnEls.length);
+    columnEls.forEach((col, i) => {
+      fillTunnelColumn(col.querySelector('.ticker-tunnel__column-inner'), groups[i], 0);
+    });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function setupTunnel(columnCount, pinDistanceVh) {
+    section.classList.remove('ticker-tunnel--static');
+
+    const groups = splitIntoColumns(TUNNEL_TICKERS, columnCount);
+    const pinDistance = window.innerHeight * pinDistanceVh;
+
+    columnEls.forEach((col, i) => {
+      col.style.display = i < columnCount ? '' : 'none';
+    });
+
+    const activeColumns = columnEls.slice(0, columnCount);
+
+    /* Re-roll % change values a few times per tunnel traversal, in both
+       scroll directions, so the figures feel "live" while pinned. */
+    const STEPS_PER_TRAVERSAL = 24;
+    let lastStep = -1;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => '+=' + Math.round(window.innerHeight * pinDistanceVh),
+        scrub: true,
+        pin: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const step = Math.floor(self.progress * STEPS_PER_TRAVERSAL);
+          if (step !== lastStep) {
+            lastStep = step;
+            refreshTunnelChanges(activeColumns);
+          }
+        },
+      },
+    });
+
+    activeColumns.forEach((col, i) => {
+      const inner = col.querySelector('.ticker-tunnel__column-inner');
+      const speed = COLUMN_SPEEDS[i % COLUMN_SPEEDS.length];
+      fillTunnelColumn(inner, groups[i], window.innerHeight + pinDistance * speed + 200);
+      gsap.set(inner, { y: 0 });
+      tl.to(inner, { y: -(pinDistance * speed), ease: 'none', duration: 1 }, 0);
+    });
+
+    return () => {
+      if (tl.scrollTrigger) tl.scrollTrigger.kill();
+      tl.kill();
+      activeColumns.forEach(col => {
+        gsap.set(col.querySelector('.ticker-tunnel__column-inner'), { clearProps: 'transform' });
+      });
+    };
+  }
+
+  function setupStatic() {
+    section.classList.add('ticker-tunnel--static');
+    const groups = splitIntoColumns(TUNNEL_TICKERS, columnEls.length);
+    columnEls.forEach((col, i) => {
+      col.style.display = '';
+      const inner = col.querySelector('.ticker-tunnel__column-inner');
+      gsap.set(inner, { clearProps: 'transform' });
+      fillTunnelColumn(inner, groups[i], 0);
+    });
+
+    return () => section.classList.remove('ticker-tunnel--static');
+  }
+
+  ScrollTrigger.matchMedia({
+    '(prefers-reduced-motion: reduce)': setupStatic,
+    '(prefers-reduced-motion: no-preference) and (min-width: 768px)':
+      () => setupTunnel(5, PIN_DISTANCE_VH),
+    '(prefers-reduced-motion: no-preference) and (max-width: 767px)':
+      () => setupTunnel(3, PIN_DISTANCE_VH_MOBILE),
+  });
+})();
 
 /* ─── Tilt effect on mockup ─────────────────────────────────── */
 const mockup = document.querySelector('.mockup');
