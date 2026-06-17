@@ -299,8 +299,33 @@
       </div>
       <div class="assets-stack">
 
+        <!-- Decorative flowing lines behind the cards -->
+        <svg class="assets-flow-lines" aria-hidden="true" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="flowGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#6366f1" stop-opacity="0.8"/>
+              <stop offset="25%"  stop-color="#8b5cf6" stop-opacity="0.6"/>
+              <stop offset="50%"  stop-color="#ec4899" stop-opacity="0.5"/>
+              <stop offset="75%"  stop-color="#0ea5e9" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+            </linearGradient>
+            <linearGradient id="flowGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#818cf8" stop-opacity="0.35"/>
+              <stop offset="50%"  stop-color="#f0abfc" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.35"/>
+            </linearGradient>
+            <filter id="flowGlow">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path class="assets-flow-line assets-flow-line--main" stroke="url(#flowGrad)" filter="url(#flowGlow)"/>
+          <path class="assets-flow-line assets-flow-line--secondary" stroke="url(#flowGrad2)"/>
+        </svg>
+
           <!-- MODULE 1: Acciones y ETFs -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#6366f1;--num-color-end:#8b5cf6">01</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -338,6 +363,7 @@
 
           <!-- MODULE 2: Bonos Gubernamentales -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#10b981;--num-color-end:#34d399">02</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#10b981,#34d399)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -375,6 +401,7 @@
 
           <!-- MODULE 3: Fondos de Inversión -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#f59e0b;--num-color-end:#fbbf24">03</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -412,6 +439,7 @@
 
           <!-- MODULE 4: FIBRAs -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#ec4899;--num-color-end:#f43f5e">04</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -449,6 +477,7 @@
 
           <!-- MODULE 5: Fondos para el Retiro -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#0ea5e9;--num-color-end:#38bdf8">05</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -486,6 +515,7 @@
 
           <!-- MODULE 6: Criptomonedas -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#f97316;--num-color-end:#fb923c">06</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#f97316,#fb923c)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -523,6 +553,7 @@
 
           <!-- MODULE 7: Bienes y Raíces -->
           <div class="carousel-slide">
+            <span class="asset-number" aria-hidden="true" style="--num-color-start:#8b5cf6;--num-color-end:#a78bfa">07</span>
             <div class="slide__info-header">
               <div class="asset-card__icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

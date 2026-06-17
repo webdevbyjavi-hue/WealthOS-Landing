@@ -93,6 +93,135 @@ document.querySelectorAll('.reveal, .reveal-up').forEach(el => {
   cards.forEach(card => assetObserver.observe(card));
 })();
 
+/* ─── Assets flow lines (scroll-driven SVG path) ──────────── */
+(function initFlowLines() {
+  const stack = document.querySelector('.assets-stack');
+  const svg   = document.querySelector('.assets-flow-lines');
+  if (!stack || !svg) return;
+
+  const mainPath = svg.querySelector('.assets-flow-line--main');
+  const secPath  = svg.querySelector('.assets-flow-line--secondary');
+  const cards    = stack.querySelectorAll('.carousel-slide');
+  if (!cards.length) return;
+
+  function buildPaths() {
+    const w = stack.offsetWidth;
+    const h = stack.offsetHeight;
+    if (w === 0 || h === 0) return;
+
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+    function blankX(card, isLeft) {
+      if (isLeft) {
+        // blank space is to the LEFT of the card
+        return card.offsetLeft / 2;
+      }
+      // blank space is to the RIGHT of the card
+      return card.offsetLeft + card.offsetWidth + (w - (card.offsetLeft + card.offsetWidth)) / 2;
+    }
+
+    if (cards.length < 2) return;
+
+    // Build main path: run vertically beside each card, then S-curve across to the next
+    const pad = 10;
+    let d = '';
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const isOdd = i % 2 === 0; // 0-indexed
+      const x = blankX(card, !isOdd); // odd cards → right blank, even → left blank
+      const top = card.offsetTop + pad;
+      const bot = card.offsetTop + card.offsetHeight - pad;
+
+      if (i === 0) {
+        d += `M ${x} ${top}`;
+      }
+      // Vertical line alongside this card
+      d += ` L ${x} ${bot}`;
+
+      // S-curve crossing to the next card's blank space
+      if (i < cards.length - 1) {
+        const next = cards[i + 1];
+        const nextIsOdd = (i + 1) % 2 === 0;
+        const nx = blankX(next, !nextIsOdd);
+        const ntop = next.offsetTop + pad;
+        const gapMidY = (bot + ntop) / 2;
+        d += ` C ${x} ${gapMidY}, ${nx} ${gapMidY}, ${nx} ${ntop}`;
+      }
+    }
+
+    mainPath.setAttribute('d', d);
+
+    // Secondary path: parallel with a slight offset
+    const off = 20;
+    let d2 = '';
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const isOdd = i % 2 === 0;
+      const x = blankX(card, !isOdd) + (isOdd ? off : -off);
+      const top = card.offsetTop + pad + 8;
+      const bot = card.offsetTop + card.offsetHeight - pad - 8;
+
+      if (i === 0) {
+        d2 += `M ${x} ${top}`;
+      }
+      d2 += ` L ${x} ${bot}`;
+
+      if (i < cards.length - 1) {
+        const next = cards[i + 1];
+        const nextIsOdd = (i + 1) % 2 === 0;
+        const nx = blankX(next, !nextIsOdd) + (nextIsOdd ? off : -off);
+        const ntop = next.offsetTop + pad + 8;
+        const gapMidY = (bot + ntop) / 2;
+        d2 += ` C ${x} ${gapMidY}, ${nx} ${gapMidY}, ${nx} ${ntop}`;
+      }
+    }
+    secPath.setAttribute('d', d2);
+
+    [mainPath, secPath].forEach(p => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      p.dataset.pathLength = len;
+    });
+  }
+
+  function onScroll() {
+    const rect = stack.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // progress 0 → stack top enters viewport bottom
+    // progress 1 → stack bottom reaches viewport bottom (all cards visible)
+    const start = vh;
+    const end = vh - rect.height;
+    const range = start - end;
+    const progress = Math.max(0, Math.min(1, (start - rect.top) / (range || 1)));
+
+    [mainPath, secPath].forEach(p => {
+      const len = parseFloat(p.dataset.pathLength);
+      if (!len) return;
+      p.style.strokeDashoffset = len * (1 - progress);
+    });
+  }
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    buildPaths();
+    [mainPath, secPath].forEach(p => {
+      p.style.strokeDasharray = 'none';
+      p.style.strokeDashoffset = '0';
+    });
+    return;
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { buildPaths(); onScroll(); });
+  } else {
+    buildPaths();
+    onScroll();
+  }
+  window.addEventListener('resize', () => { buildPaths(); onScroll(); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
 /* ─── Animated number counters ──────────────────────────────── */
 function animateCounter(el, target, duration = 1200) {
   const start = performance.now();
